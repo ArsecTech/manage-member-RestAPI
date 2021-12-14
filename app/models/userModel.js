@@ -9,5 +9,5 @@ const userSchema = new mongoose.Schema({
    updateAt:{type:Date, default:Date.now()}
 })
 
-const userModel = mongoose.Model('user',userSchema)
+const userModel = mongoose.model('user',userSchema)
 module.exports = userModel

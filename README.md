@@ -1,5 +1,5 @@
 <p align="center">
-  <a href='https://github.com/ArsecTech/manage-member-RestAP' target='_blank'><img src='https://clubrunner.blob.core.windows.net/00000299792/Images/Screenshots/Graphics/What-makes-us-different.png' border='5'/></a>  <h1 align="center">manage-member-RestAPI
+  <a href='https://github.com/ArsecTech/manage-member-RestAP' target='_blank'><img src='https://clubrunner.blob.core.windows.net/00000299792/Images/Screenshots/Graphics/What-makes-us-different.png' border='5'/></a>  <h1 align="center">manage-member
 </h1> 
  
 </p>

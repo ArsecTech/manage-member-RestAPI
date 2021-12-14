@@ -1,11 +1,15 @@
 const UserModel = require('../models/userModel')
-const usersList = (req, res, next) => {
-  const user = UserModel.find()
+const usersList = async (req, res, next) => {
+  const users = await UserModel.find({})
   res.send({
     success: true,
-    message:'لیست کاربران با موفقیت تولید شد'
+    message:'لیست کاربران با موفقیت تولید شد',
+    data:{
+      users
+    }
   })
 }
+
 const addUser = async (req, res, next) => {
   try {
     const {first_name,last_name,mobile,email} = req.body

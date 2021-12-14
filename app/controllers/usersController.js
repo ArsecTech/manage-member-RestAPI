@@ -8,18 +8,24 @@ const usersList = (req, res, next) => {
 }
 const addUser = async (req, res, next) => {
   try {
-
+    const {first_name,last_name,mobile,email} = req.body
+    if(first_name == undefined || last_name == undefined || mobile == undefined || email == undefined){
+      return res.status(422).send({
+        error: true,
+        message:'اطلاعات ارسالی برای ایجاد کاربر معتبر نمی باشد'
+      })
+    }
     const newUser = new UserModel({
-      first_name: 'سید عرشیا',
-      last_name: 'غفاریان',
-      mobile: '09228645257',
-      email: 'arshia.ghaffarian003@gmail.com'
+      first_name,
+      last_name,
+      mobile,
+      email
     })
     await newUser.save()
-    res.send({
+    res.status(201).send({
       success: true,
       message:'کاربر جدید با موفقیت ایجاد شد  ',
-      newUserID:newUser._id
+      newUser
     })
 
   }catch(err) {

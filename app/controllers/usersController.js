@@ -44,8 +44,33 @@ const addUser = async (req, res, next) => {
   }
 
 }
+const getUser = async (req, res, next) => {
+
+
+  try{
+     const {id} = req.params //? req.params req.query req.body req.headers
+     if(!id){
+        return res.status(404).send({error: true, message:'کاربری با این مشخصات یافت نشد'})
+     }
+     const user = await UserModel.findOne({_id:id})
+     if(!user){
+       return res.status(404).send({error:true, message:'کاربری با این مشخصات یافت نشد'})
+     }
+     return res.send({
+       success: true,
+       data:{
+         user
+       }
+     })
+    }catch(err) {
+    next(err)
+  }
+
+}
+
 
 module.exports = {
   usersList,
-  addUser
+  addUser,
+  getUser
 }

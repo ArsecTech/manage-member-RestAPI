@@ -68,9 +68,25 @@ const getUser = async (req, res, next) => {
 
 }
 
+const removeUser = async (req,res,next) => {
+  try{
+    const {id} = req.params //? req.params req.query req.body req.headers
+    if(!id){
+       return res.status(404).send({error: true, message:'کاربری با این مشخصات یافت نشد'})
+    }
+
+    await UserModel.deleteOne({_id:id})
+    res.send({success: true, message:'کاربر با موفقیت حذف شد'})
+
+  }catch(err) {
+    next(err)
+  }
+}
+
 
 module.exports = {
   usersList,
   addUser,
-  getUser
+  getUser,
+  removeUser
 }

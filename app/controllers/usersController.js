@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel')
+
 const usersList = async (req, res, next) => {
   let projection = {}
   if(req.query.hasOwnProperty('fields')) {
@@ -83,10 +84,31 @@ const removeUser = async (req,res,next) => {
   }
 }
 
+const updateUser = async (req,res,next) => {
+  try{
+    const {id} = req.params //? req.params req.query req.body req.headers
+    if(!id){
+       return res.status(404).send({error: true, message:'کاربری با این مشخصات یافت نشد'})
+    }
+
+   const {n,nModified} = await UserModel.updateOne({_id:id},{...req.body})
+    
+   
+   if(n===0 || nModified ===0){
+     throw new Error('عملیات به روز رسانی با خطا مواجه شد!')
+   }
+   
+   res.send({success: true, message:'کاربر با موفقیت به روز رسانی شد'})
+
+  }catch(err) {
+    next(err)
+  }
+}
 
 module.exports = {
   usersList,
   addUser,
   getUser,
-  removeUser
+  removeUser,
+  updateUser
 }

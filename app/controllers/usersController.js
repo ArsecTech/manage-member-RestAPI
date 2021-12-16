@@ -8,12 +8,26 @@ const usersList = async (req, res, next) => {
     },{}) 
     
   } 
-  const users = await UserModel.find({}, projection)
+
+  const perPage = 1
+  const page = req.query.page || 1
+  const offset = (page - 1) * perPage
+  const usersCount = await UserModel.count()
+  const totalPages = Math.ceil(usersCount / perPage)
+  const users = await UserModel.find({}, projection).limit(perPage).skip(offset)
+  
   res.send({
     success: true,
     message:'لیست کاربران با موفقیت تولید شد',
     data:{
       users
+    },
+    meta:{
+      page:parseInt(page),
+      pages:totalPages,
+      next:hasNextPage(page,totalPages) ? `${process.env.APP_URL}/api/v1/users?page=${parseInt(page) + 1} ` : null,
+      prev:hasPrevPage(page,totalPages) ? `${process.env.APP_URL}/api/v1/users?page=${page - 1} ` : null,
+
     }
   })
 }
@@ -111,4 +125,12 @@ module.exports = {
   getUser,
   removeUser,
   updateUser
+}
+
+const hasNextPage = (page,totalPages) => {
+  return page < totalPages;
+}
+
+const hasPrevPage = (page,totalPages) => {
+  return page > 1;
 }
